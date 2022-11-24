@@ -40,39 +40,11 @@ spec:
         }
     }
 
-    stage('Push Image to Docker Hub') {
-      steps {
-        script {
-          dockerImage = docker.build registryFrontend + ":$BUILD_NUMBER"
-          docker.withRegistry( '', registryCredential) {
-            dockerImage.push()
-          }
+    stage("Info"){
+        steps{
+            sh "mvn -v"
+            sh "java --version"
         }
-      }
-    }
-
-    stage('Push Image latest to Docker Hub') {
-      steps {
-        script {
-          dockerImage = docker.build registryFrontend + ":latest"
-          docker.withRegistry( '', registryCredential) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-
-    stage('Deploy to K8s') {
-      steps{
-        script {
-          if(fileExists("configuracion")){
-            sh 'rm -r configuracion'
-          }
-        }
-        sh "git clone https://github.com/lhamaoka/kubernetes-helm-docker-config.git configuracion --branch test-implementation"
-        sh "kubectl apply -f configuracion/kubernetes-deployment/spring-boot-app/manifest.yml --kubeconfig=configuracion/kubernetes-config/config"
-      }
-
     }
   }
 
