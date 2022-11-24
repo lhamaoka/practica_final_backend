@@ -53,7 +53,7 @@ spec:
                 pom = readMavenPom file: "pom.xml"
                 def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
                 echo "${version}"
-                sh "mvn versions:set -DremoveSnapshot=true -DgenerateBackupPoms=false"
+                sh "mvn versions:set -DremoveSnapshot=true"
                 def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
                 echo "${versionsinsnapshot}"
                 // Find built artifact under target folder
