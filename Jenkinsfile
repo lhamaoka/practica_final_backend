@@ -45,7 +45,7 @@ spec:
     stage('Code Promotion') {
 
         when {
-            branch 'develop'
+            branch 'main'
         }
         steps {
             script {
