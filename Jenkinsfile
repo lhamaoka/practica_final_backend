@@ -46,6 +46,14 @@ spec:
         }
     }
 
+    stage("Test") {
+        steps {
+            sh "mvn test"
+            jacoco()
+            junit "target/surefire-reports/*.xml"
+        }
+    }
+
     stage('SonarQube analysis') {
           steps {
             withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
@@ -54,18 +62,18 @@ spec:
           }
         }
 
-        stage('Quality Gate') {
-          steps {
+    stage('Quality Gate') {
+        steps {
             timeout(time: 2, unit: "MINUTES") {
-              script {
-                def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
-                if (qg.status != 'OK') {
-                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                script {
+                    def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
+                    if (qg.status != 'OK') {
+                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    }
                 }
-              }
             }
-          }
         }
+    }
   }
 
   post {
