@@ -1,2 +1,7 @@
-# practica_final_backend
-backend de la practica final
+# Spring Boot H2 Database CRUD example: Building Rest API with Spring Data JPA
+
+## Run Spring Boot application
+```
+mvn spring-boot:run
+```
+
