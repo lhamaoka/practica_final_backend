@@ -46,6 +46,15 @@ spec:
         }
     }
 
+    stage('Example Deploy') {
+        when {
+            branch 'main'
+        }
+        steps {
+            echo 'Deploying'
+        }
+    }
+
     stage("Test") {
         steps {
             sh "mvn test"
