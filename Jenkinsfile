@@ -34,13 +34,7 @@ spec:
   }
 
   stages {
-    stage("Builds"){
-        steps{
-            sh "mvn clean package -DskipTests"
-        }
-    }
-
-    stage("Info"){
+    stage("Prepare environment"){
         steps{
             sh "mvn -v"
             sh "java --version"
