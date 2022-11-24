@@ -40,6 +40,11 @@ spec:
             sh "java --version"
         }
     }
+    stage("Compile"){
+        steps{
+            sh "mvn clean package -DskipTests"
+        }
+    }
   }
 
   post {
