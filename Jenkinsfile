@@ -43,6 +43,7 @@ spec:
     }
 
     stage('Code Promotion') {
+
         when {
             branch 'main'
         }

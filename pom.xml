@@ -27,9 +27,9 @@
             <properties>
                 <!-- Optional URL to server. Default value is http://localhost:9000 -->
                 <sonar.host.url>
-                    http://sonarqube:9000
+                    https://daita-sonarqube.loca.lt
                 </sonar.host.url>
-                <sonar.login>squ_aef171a93ea1b6dbea7ecac58bd1e2a559dec9ce</sonar.login>
+                <sonar.login>sqa_70404e9e6475564607a0e65202a5f9bdb7caf76a</sonar.login>
             </properties>
         </profile>
     </profiles>
@@ -63,6 +63,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version>
             </plugin>
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
