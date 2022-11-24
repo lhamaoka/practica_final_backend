@@ -53,6 +53,9 @@ spec:
                 pom = readMavenPom file: "pom.xml"
                 def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
                 echo "${version}"
+                sh "mvn versions:set -DremoveSnapshot=true -DgenerateBackupPoms=false"
+                def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+                echo "${versionsinsnapshot}"
                 // Find built artifact under target folder
                 // filesByGlob = findFiles(glob: "target/*.${pom.packaging}")
                 // Print some info from the artifact found
@@ -118,18 +121,18 @@ spec:
         }
     }
 
-    stage('Quality Gate') {
-        steps {
-            timeout(time: 2, unit: "MINUTES") {
-                script {
-                    def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
-                    if (qg.status != 'OK') {
-                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                    }
-                }
-            }
-        }
-    }
+    // stage('Quality Gate') {
+    //     steps {
+    //         timeout(time: 2, unit: "MINUTES") {
+    //             script {
+    //                 def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
+    //                 if (qg.status != 'OK') {
+    //                     error "Pipeline aborted due to quality gate failure: ${qg.status}"
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
   }
 
   post {
