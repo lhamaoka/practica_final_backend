@@ -27,7 +27,7 @@
             <properties>
                 <!-- Optional URL to server. Default value is http://localhost:9000 -->
                 <sonar.host.url>
-                    http://sonarqube:9000
+                    https://daita-sonarqube.loca.lt
                 </sonar.host.url>
                 <sonar.login>sqa_70404e9e6475564607a0e65202a5f9bdb7caf76a</sonar.login>
             </properties>
