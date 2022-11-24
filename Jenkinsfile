@@ -54,6 +54,7 @@ spec:
                 def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
                 echo "${version}"
                 def versionsinsnapshot = sh script: 'mvn versions:set -DremoveSnapshot=true -DgenerateBackupPoms=false', returnStdout: true
+                echo "${version}"
                 echo "${versionsinsnapshot}"
                 // Find built artifact under target folder
                 // filesByGlob = findFiles(glob: "target/*.${pom.packaging}")
