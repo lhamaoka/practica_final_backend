@@ -93,23 +93,23 @@ spec:
     //     }
     // }
 
-    stage('6.- Quality Tests') {
-      // steps {
+    // stage('6.- Quality Tests') {
+    //   steps {
 
-          // withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
-          //     sh "mvn clean verify sonar:sonar -DskipTests"
-          // }
+    //       withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
+    //           sh "mvn clean verify sonar:sonar -DskipTests"
+    //       }
 
-          // timeout(time: 2, unit: "MINUTES") {
-          //     script {
-          //         def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
-          //         if (qg.status != 'OK') {
-          //             error "Pipeline aborted due to quality gate failure: ${qg.status}"
-          //         }
-          //     }
-          // }
-      // }
-    }
+    //       timeout(time: 2, unit: "MINUTES") {
+    //           script {
+    //               def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
+    //               if (qg.status != 'OK') {
+    //                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
+    //               }
+    //           }
+    //       }
+    //   }
+    // }
 
     stage("7.- Package"){
         steps{
