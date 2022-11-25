@@ -1,4 +1,3 @@
-def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
 pipeline{
 
     agent {
@@ -33,6 +32,7 @@ spec:
     githubCredential='github_token'
     registryBacktend = 'lhamaoka/practica_final_frontend'
     POM_VERSION = ''
+    version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
   }
 
   stages {
