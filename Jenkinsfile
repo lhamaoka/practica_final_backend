@@ -65,25 +65,25 @@ spec:
         }
     }
 
-    // stage("2.- Compile"){
-    //     steps{
-    //         sh "mvn clean compile -DskipTests"
-    //     }
-    // }
+    stage("2.- Compile"){
+        steps{
+            sh "mvn clean compile -DskipTests"
+        }
+    }
 
-    // stage("3.- Unit Tests") {
-    //     steps {
-    //         sh "mvn test"
-    //         junit "target/surefire-reports/*.xml"
-    //     }
-    // }
+    stage("3.- Unit Tests") {
+        steps {
+            sh "mvn test"
+            junit "target/surefire-reports/*.xml"
+        }
+    }
 
-    // stage("4.- JaCoCo Tests") {
-    //     steps {
-    //         jacoco()
-    //         junit "target/surefire-reports/*.xml"
-    //     }
-    // }
+    stage("4.- JaCoCo Tests") {
+        steps {
+            jacoco()
+            junit "target/surefire-reports/*.xml"
+        }
+    }
 
     // stage('5.- SonarQube analysis') {
     //     steps {
@@ -111,11 +111,11 @@ spec:
     //   }
     // }
 
-    // stage("7.- Package"){
-    //     steps{
-    //         sh "mvn clean package -DskipTests"
-    //     }
-    // }
+    stage("7.- Package"){
+        steps{
+            sh "mvn clean package -DskipTests"
+        }
+    }
 
     stage("8.- Build & Push"){
         steps{
