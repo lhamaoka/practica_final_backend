@@ -65,11 +65,11 @@ spec:
         }
     }
 
-    stage("2.- Compile"){
-        steps{
-            sh "mvn clean compile -DskipTests"
-        }
-    }
+    // stage("2.- Compile"){
+    //     steps{
+    //         sh "mvn clean compile -DskipTests"
+    //     }
+    // }
 
     // stage("3.- Unit Tests") {
     //     steps {
@@ -111,26 +111,33 @@ spec:
     //   }
     // }
 
-    stage("7.- Package"){
-        steps{
-            sh "mvn clean package -DskipTests"
-        }
-    }
+    // stage("7.- Package"){
+    //     steps{
+    //         sh "mvn clean package -DskipTests"
+    //     }
+    // }
 
-    stage("8.- Build & Push"){
-        steps{
-            script {
-              dockerImage = docker.build registryBacktend + ":$BUILD_NUMBER"
-              docker.withRegistry( '', registryCredential) {
-                dockerImage.push()
-              }
-            }
-        }
-    }
+    // stage("8.- Build & Push"){
+    //     steps{
+    //         script {
+    //           dockerImage = docker.build registryBacktend + ":$BUILD_NUMBER"
+    //           docker.withRegistry( '', registryCredential) {
+    //             dockerImage.push()
+    //           }
+    //         }
+    //     }
+    // }
 
     stage("9.- Run test environment"){
         steps{
             sh "echo Iniciar un pod o contenedor con la imagen que acabamos de generar."
+            script {
+              if(fileExists("launcher")){
+                sh 'rm -r launcher'
+              }
+            }
+            sh "git clone https://github.com/lhamaoka/manifest_launcher.git launcher"
+            sh "kubectl apply -f launcher/deploys/backend/manifest.yaml --kubeconfig=launcher/config/config"
         }
     }
 
