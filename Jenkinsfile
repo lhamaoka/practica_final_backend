@@ -94,7 +94,7 @@ spec:
     // }
 
     stage('6.- Quality Tests') {
-      steps {
+      // steps {
 
           // withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
           //     sh "mvn clean verify sonar:sonar -DskipTests"
@@ -108,7 +108,7 @@ spec:
           //         }
           //     }
           // }
-      }
+      // }
     }
 
     stage("7.- Package"){
