@@ -30,7 +30,7 @@ spec:
 
   environment {
     registryCredential='dockerhub_credentials'
-    registryBacktend = 'lhamaoka/practica_final_frontend'
+    registryBacktend = 'lhamaoka/practica_final_backtend'
     POM_VERSION = ''
     version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
   }
@@ -130,9 +130,30 @@ spec:
 
     stage("9.- Run test environment"){
         steps{
-            sh "mvn -v"
+            sh "Iniciar un pod o contenedor con la imagen que acabamos de generar."
         }
     }
+
+    stage("10.- API Test o Performance Test"){
+        steps{
+            sh "Lanzar los test de JMeter o las pruebas de API con Newman."
+        }
+    }
+
+    stage("11.- Nexus"){
+        steps{
+            sh "Si se ha llegado a esta etapa sin problemas, se deberá depositar el artefacto generado (.jar) en Nexus."
+        }
+    }
+
+    stage("12.- Deploy"){
+        steps{
+            sh """En esta stage se debe desplegar en un pod, la imagen generada
+            en la etapa 8. Para ello se deberá generar un Chart de Helm como los vistos en
+            clase que contenga un ConfigMap y un Pod con dicha imagen"""
+        }
+    }
+
   }
 
   post {
