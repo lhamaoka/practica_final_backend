@@ -139,18 +139,20 @@ spec:
             sh "echo Lanzar los test de JMeter o las pruebas de API con Newman."
         }
     }
-
+echo """dsgsd
+asefsadf
+asdfasdf"""
     stage("11.- Nexus"){
         steps{
-            sh "echo Si se ha llegado a esta etapa sin problemas, se deberá depositar el artefacto generado (.jar) en Nexus."
+            sh "echo Si se ha llegado a esta etapa sin problemas, se deberá depositar el artefacto generado en Nexus."
         }
     }
 
     stage("12.- Deploy"){
         steps{
-            sh """echo En esta stage se debe desplegar en un pod, la imagen generada
+            sh "echo En esta stage se debe desplegar en un pod, la imagen generada
             en la etapa 8. Para ello se deberá generar un Chart de Helm como los vistos en
-            clase que contenga un ConfigMap y un Pod con dicha imagen"""
+            clase que contenga un ConfigMap y un Pod con dicha imagen"
         }
     }
 
