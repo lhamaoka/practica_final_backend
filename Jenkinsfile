@@ -42,7 +42,7 @@ spec:
         }
     }
 
-    stage('1.-Code Promotion') {
+    stage('1.- Code Promotion') {
 
         when {
             branch 'main'
@@ -63,27 +63,27 @@ spec:
         }
     }
 
-    stage("2.-Compile"){
+    stage("2.- Compile"){
         steps{
             sh "mvn clean compile -DskipTests"
         }
     }
 
-    // stage("3.-Unit Tests") {
+    // stage("3.- Unit Tests") {
     //     steps {
     //         sh "mvn test"
     //         junit "target/surefire-reports/*.xml"
     //     }
     // }
 
-    // stage("4.-JaCoCo Tests") {
+    // stage("4.- JaCoCo Tests") {
     //     steps {
     //         jacoco()
     //         junit "target/surefire-reports/*.xml"
     //     }
     // }
 
-    // stage('5.-SonarQube analysis') {
+    // stage('5.- SonarQube analysis') {
     //     steps {
     //         withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
     //             sh "mvn clean verify sonar:sonar -DskipTests"
@@ -91,7 +91,7 @@ spec:
     //     }
     // }
 
-    stage('6.-Quality Tests') {
+    stage('6.- Quality Tests') {
       steps {
 
           withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
@@ -112,6 +112,18 @@ spec:
     stage("7.- Package"){
         steps{
             sh "mvn clean package -DskipTests"
+        }
+    }
+
+    stage("8.- Build & Push"){
+        steps{
+            sh "mvn -v"
+        }
+    }
+
+    stage("9.- Run test environment"){
+        steps{
+            sh "mvn -v"
         }
     }
   }
