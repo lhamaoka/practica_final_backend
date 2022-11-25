@@ -29,7 +29,7 @@ spec:
     }
 
   environment {
-    githubCredential='github_token'
+    registryCredential='dockerhub_credentials'
     registryBacktend = 'lhamaoka/practica_final_frontend'
     POM_VERSION = ''
     version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
