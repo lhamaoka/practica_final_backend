@@ -56,6 +56,9 @@ spec:
                 sh "mvn versions:set -DremoveSnapshot=true"
                 def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
                 echo "${versionsinsnapshot}"
+                sh "git add pom.xml"
+                sh "git commit -m \"pom.xml update \" ${version}"
+                sh "git push origin main"
             }
         }
     }
