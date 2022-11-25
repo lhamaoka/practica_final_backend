@@ -29,7 +29,7 @@ spec:
     }
 
   environment {
-    registryCredential='docker-hub-credentials'
+    githubCredential='github_token'
     registryFrontend = 'lhamaoka/pring-boot-app'
   }
 
@@ -45,7 +45,7 @@ spec:
     stage('Code Promotion') {
 
         when {
-            branch 'main'
+            branch 'develop'
         }
         steps {
             script {
@@ -58,7 +58,7 @@ spec:
                 echo "${versionsinsnapshot}"
                 sh "git add pom.xml"
                 sh "git commit -m \"pom.xml update \""
-                sh "git push origin main"
+                sh "git push https://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@github.com/lhamaoka/practica_final_backend.git main"
             }
         }
     }
