@@ -30,7 +30,7 @@ spec:
 
   environment {
     registryCredential='dockerhub_credentials'
-    registryBacktend = 'lhamaoka/practica_final_backtend'
+    registryBacktend = 'lhamaoka/practica-final-backend'
     POM_VERSION = ''
     version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
   }
@@ -117,16 +117,16 @@ spec:
     //     }
     // }
 
-    // stage("8.- Build & Push"){
-    //     steps{
-    //         script {
-    //           dockerImage = docker.build registryBacktend + ":$BUILD_NUMBER"
-    //           docker.withRegistry( '', registryCredential) {
-    //             dockerImage.push()
-    //           }
-    //         }
-    //     }
-    // }
+    stage("8.- Build & Push"){
+        steps{
+            script {
+              dockerImage = docker.build registryBacktend + ":$BUILD_NUMBER"
+              docker.withRegistry( '', registryCredential) {
+                dockerImage.push()
+              }
+            }
+        }
+    }
 
     stage("9.- Run test environment"){
         steps{
