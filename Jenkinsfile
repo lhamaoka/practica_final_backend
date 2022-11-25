@@ -54,11 +54,11 @@ spec:
                 def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
                 echo "${version}"
                 sh "mvn versions:set -DremoveSnapshot=true"
-                def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-                echo "${versionsinsnapshot}"
-                sh "git add pom.xml"
-                sh "git commit -m \"pom.xml update \""
-                sh "git push https://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@github.com/lhamaoka/practica_final_backend.git main"
+                // def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+                // echo "${versionsinsnapshot}"
+                // sh "git add pom.xml"
+                // sh "git commit -m \"pom.xml update \""
+                // sh "git push https://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@github.com/lhamaoka/practica_final_backend.git main"
             }
         }
     }
@@ -69,9 +69,15 @@ spec:
     //     }
     // }
 
-    // stage("Test") {
+    // stage("Unit Tests") {
     //     steps {
     //         sh "mvn test"
+    //         junit "target/surefire-reports/*.xml"
+    //     }
+    // }
+
+    // stage("JaCoCo Tests") {
+    //     steps {
     //         jacoco()
     //         junit "target/surefire-reports/*.xml"
     //     }
@@ -85,18 +91,23 @@ spec:
     //     }
     // }
 
-    // stage('Quality Gate') {
-    //     steps {
-    //         timeout(time: 2, unit: "MINUTES") {
-    //             script {
-    //                 def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
-    //                 if (qg.status != 'OK') {
-    //                     error "Pipeline aborted due to quality gate failure: ${qg.status}"
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    stage('Quality Tests') {
+        steps {
+          
+            withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
+                sh "mvn clean verify sonar:sonar -DskipTests"
+            }
+
+            timeout(time: 2, unit: "MINUTES") {
+                script {
+                    def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
+                    if (qg.status != 'OK') {
+                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    }
+                }
+            }
+        }
+    }
   }
 
   post {
