@@ -1,3 +1,4 @@
+def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
 pipeline{
 
     agent {
@@ -30,7 +31,8 @@ spec:
 
   environment {
     githubCredential='github_token'
-    registryFrontend = 'lhamaoka/pring-boot-app'
+    registryBacktend = 'lhamaoka/practica_final_frontend'
+    POM_VERSION = ''
   }
 
   stages {
@@ -51,7 +53,7 @@ spec:
             script {
                 // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
                 pom = readMavenPom file: "pom.xml"
-                def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+                
                 echo "${version}"
                 sh "mvn versions:set -DremoveSnapshot=true"
                 // def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
@@ -94,9 +96,9 @@ spec:
     stage('6.- Quality Tests') {
       steps {
 
-          withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
-              sh "mvn clean verify sonar:sonar -DskipTests"
-          }
+          // withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
+          //     sh "mvn clean verify sonar:sonar -DskipTests"
+          // }
 
           // timeout(time: 2, unit: "MINUTES") {
           //     script {
@@ -117,7 +119,12 @@ spec:
 
     stage("8.- Build & Push"){
         steps{
-            sh "mvn -v"
+            script {
+              dockerImage = docker.build registryBacktend + ":$BUILD_NUMBER"
+              docker.withRegistry( '', registryCredential) {
+                dockerImage.push()
+              }
+            }
         }
     }
 
