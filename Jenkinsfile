@@ -139,9 +139,7 @@ spec:
             sh "echo Lanzar los test de JMeter o las pruebas de API con Newman."
         }
     }
-echo """dsgsd
-asefsadf
-asdfasdf"""
+
     stage("11.- Nexus"){
         steps{
             sh "echo Si se ha llegado a esta etapa sin problemas, se deberá depositar el artefacto generado en Nexus."
