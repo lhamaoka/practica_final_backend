@@ -28,7 +28,7 @@ spec:
         }
     }
 
-    environment {
+  environment {
     registryCredential='dockerhub_credentials'
     registryBacktend = 'lhamaoka/practica-final-backend'
     POM_VERSION = ''
@@ -49,26 +49,26 @@ spec:
         }
     }
 
-    stage('1.- Code Promotion') {
+    // stage('1.- Code Promotion') {
 
-        when {
-            branch 'main'
-        }
-        steps {
-            script {
-                // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
-                pom = readMavenPom file: "pom.xml"
+    //     when {
+    //         branch 'main'
+    //     }
+    //     steps {
+    //         script {
+    //             // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
+    //             pom = readMavenPom file: "pom.xml"
                 
-                echo "${version}"
-                sh "mvn versions:set -DremoveSnapshot=true"
-                // def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-                // echo "${versionsinsnapshot}"
-                // sh "git add pom.xml"
-                // sh "git commit -m \"pom.xml update \""
-                // sh "git push https://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@github.com/lhamaoka/practica_final_backend.git main"
-            }
-        }
-    }
+    //             echo "${version}"
+    //             sh "mvn versions:set -DremoveSnapshot=true"
+    //             // def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+    //             // echo "${versionsinsnapshot}"
+    //             // sh "git add pom.xml"
+    //             // sh "git commit -m \"pom.xml update \""
+    //             // sh "git push https://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@github.com/lhamaoka/practica_final_backend.git main"
+    //         }
+    //     }
+    // }
 
     // stage("2.- Compile"){
     //     steps{
@@ -97,45 +97,45 @@ spec:
     //     }
     // }
 
-    // stage('6.- Quality Tests') {
-    //   steps {
+    stage('6.- Quality Tests') {
+      steps {
 
-    //       withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
-    //           sh "mvn clean verify sonar:sonar -DskipTests"
-    //       }
+          withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
+              sh "mvn clean verify sonar:sonar -DskipTests"
+          }
 
-    //       timeout(time: 2, unit: "MINUTES") {
-    //           script {
-    //               def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
-    //               if (qg.status != 'OK') {
-    //                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
-    //               }
-    //           }
-    //       }
-    //   }
+          timeout(time: 2, unit: "MINUTES") {
+              script {
+                  def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
+                  if (qg.status != 'OK') {
+                      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                  }
+              }
+          }
+      }
+    }
+
+    // stage("7.- Package"){
+    //     steps{
+    //         sh "mvn clean package -DskipTests"
+    //     }
     // }
 
-    stage("7.- Package"){
-        steps{
-            sh "mvn clean package -DskipTests"
-        }
-    }
+    // stage("8.- Build & Push"){
+    //     steps{
+    //         script {
+    //           dockerImage = docker.build registryBacktend + ":$BUILD_NUMBER"
+    //           docker.withRegistry( '', registryCredential) {
+    //             dockerImage.push()
+    //           }
 
-    stage("8.- Build & Push"){
-        steps{
-            script {
-              dockerImage = docker.build registryBacktend + ":$BUILD_NUMBER"
-              docker.withRegistry( '', registryCredential) {
-                dockerImage.push()
-              }
-
-              dockerImage = docker.build registryBacktend + ":latest"
-              docker.withRegistry( '', registryCredential) {
-                dockerImage.push()
-              }
-            }
-        }
-    }
+    //           dockerImage = docker.build registryBacktend + ":latest"
+    //           docker.withRegistry( '', registryCredential) {
+    //             dockerImage.push()
+    //           }
+    //         }
+    //     }
+    // }
 
     // stage("9.- Run test environment"){
     //     steps{
@@ -271,18 +271,18 @@ spec:
     //     }
     // }
 
-    stage("12.- Deploy"){
-        steps{
-            sh "echo En esta stage se debe desplegar en un pod, la imagen generada en la etapa 8. Para ello se deberá generar un Chart de Helm como los vistos en clase que contenga un ConfigMap y un Pod con dicha imagen"         
-            script {
-                if(fileExists("configuracion")){
-                    sh 'rm -r configuracion'
-                }
-            }
-            sh "git clone https://github.com/lhamaoka/manifest_launcher.git launcher"
-            sh "kubectl apply -f launcher/deploys/backend/manifest.yaml --kubeconfig=launcher/config/config"
-        }
-    }
+    // stage("12.- Deploy"){
+    //     steps{
+    //         sh "echo En esta stage se debe desplegar en un pod, la imagen generada en la etapa 8. Para ello se deberá generar un Chart de Helm como los vistos en clase que contenga un ConfigMap y un Pod con dicha imagen"         
+    //         script {
+    //             if(fileExists("configuracion")){
+    //                 sh 'rm -r configuracion'
+    //             }
+    //         }
+    //         sh "git clone https://github.com/lhamaoka/manifest_launcher.git launcher"
+    //         sh "kubectl apply -f launcher/deploys/backend/manifest.yaml --kubeconfig=launcher/config/config"
+    //     }
+    // }
 
   }
 
