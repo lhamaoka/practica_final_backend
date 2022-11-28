@@ -8,7 +8,7 @@ kind: Pod
 spec:
   containers:
   - name: shell
-    image: lhamaoka/nodo-java-practica-final:1.0
+    image: lhamaoka/nodo-nodejs-practica-final
     volumeMounts:
     - mountPath: /var/run/docker.sock
       name: docker-socket-volume
