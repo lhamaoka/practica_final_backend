@@ -121,16 +121,21 @@ spec:
         }
     }
 
-    // stage("8.- Build & Push"){
-    //     steps{
-    //         script {
-    //           dockerImage = docker.build registryBacktend + ":$BUILD_NUMBER"
-    //           docker.withRegistry( '', registryCredential) {
-    //             dockerImage.push()
-    //           }
-    //         }
-    //     }
-    // }
+    stage("8.- Build & Push"){
+        steps{
+            script {
+              dockerImage = docker.build registryBacktend + ":$BUILD_NUMBER"
+              docker.withRegistry( '', registryCredential) {
+                dockerImage.push()
+              }
+
+              dockerImage = docker.build registryBacktend + ":latest"
+              docker.withRegistry( '', registryCredential) {
+                dockerImage.push()
+              }
+            }
+        }
+    }
 
     // stage("9.- Run test environment"){
     //     steps{
