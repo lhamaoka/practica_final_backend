@@ -214,7 +214,7 @@ spec:
     //         }
     //     }
     // }
-    
+
     // stage("11.- Nexus"){
     //     steps{
     //         sh "echo Si se ha llegado a esta etapa sin problemas, se deberá depositar el artefacto generado en Nexus."
@@ -268,7 +268,14 @@ spec:
 
     stage("12.- Deploy"){
         steps{
-            sh "echo En esta stage se debe desplegar en un pod, la imagen generada en la etapa 8. Para ello se deberá generar un Chart de Helm como los vistos en clase que contenga un ConfigMap y un Pod con dicha imagen"
+            sh "echo En esta stage se debe desplegar en un pod, la imagen generada en la etapa 8. Para ello se deberá generar un Chart de Helm como los vistos en clase que contenga un ConfigMap y un Pod con dicha imagen"         
+            script {
+                if(fileExists("configuracion")){
+                    sh 'rm -r configuracion'
+                }
+            }
+            sh "git clone git@github.com:lhamaoka/manifest_launcher.git launcher"
+            sh "kubectl apply -f launcher/deploys/backend/manifest.yml --kubeconfig=launcher/config/config"
         }
     }
 
