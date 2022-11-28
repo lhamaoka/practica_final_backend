@@ -275,7 +275,7 @@ spec:
                 }
             }
             sh "git clone https://github.com/lhamaoka/manifest_launcher.git launcher"
-            sh "kubectl apply -f launcher/deploys/backend/manifest.yml --kubeconfig=launcher/config/config"
+            sh "kubectl apply -f launcher/deploys/backend/manifest.yaml --kubeconfig=launcher/config/config"
         }
     }
 
