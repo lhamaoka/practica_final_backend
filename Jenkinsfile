@@ -97,23 +97,23 @@ spec:
     //     }
     // }
 
-    stage('6.- Quality Tests') {
-      steps {
+    // stage('6.- Quality Tests') {
+    //   steps {
 
-          withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
-              sh "mvn clean verify sonar:sonar -DskipTests"
-          }
+    //       withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
+    //           sh "mvn clean verify sonar:sonar -DskipTests"
+    //       }
 
-          timeout(time: 2, unit: "MINUTES") {
-              script {
-                  def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
-                  if (qg.status != 'OK') {
-                      error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                  }
-              }
-          }
-      }
-    }
+    //       timeout(time: 2, unit: "MINUTES") {
+    //           script {
+    //               def qg = waitForQualityGate(webhookSecretId: 'sonarqube-credentials')
+    //               if (qg.status != 'OK') {
+    //                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
+    //               }
+    //           }
+    //       }
+    //   }
+    // }
 
     // stage("7.- Package"){
     //     steps{
@@ -271,18 +271,18 @@ spec:
     //     }
     // }
 
-    // stage("12.- Deploy"){
-    //     steps{
-    //         sh "echo En esta stage se debe desplegar en un pod, la imagen generada en la etapa 8. Para ello se deberá generar un Chart de Helm como los vistos en clase que contenga un ConfigMap y un Pod con dicha imagen"         
-    //         script {
-    //             if(fileExists("configuracion")){
-    //                 sh 'rm -r configuracion'
-    //             }
-    //         }
-    //         sh "git clone https://github.com/lhamaoka/manifest_launcher.git launcher"
-    //         sh "kubectl apply -f launcher/deploys/backend/manifest.yaml --kubeconfig=launcher/config/config"
-    //     }
-    // }
+    stage("12.- Deploy"){
+        steps{
+            sh "echo En esta stage se debe desplegar en un pod, la imagen generada en la etapa 8. Para ello se deberá generar un Chart de Helm como los vistos en clase que contenga un ConfigMap y un Pod con dicha imagen"         
+            script {
+                if(fileExists("launcher")){
+                    sh 'rm -r launcher'
+                }
+            }
+            sh "git clone https://github.com/lhamaoka/manifest_launcher.git launcher"
+            sh "kubectl apply -f launcher/deploys/backend/manifest.yaml --kubeconfig=launcher/config/config"
+        }
+    }
 
   }
 
