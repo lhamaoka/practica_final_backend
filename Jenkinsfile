@@ -35,9 +35,9 @@ spec:
     version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
     NEXUS_VERSION = "nexus3"
     NEXUS_PROTOCOL = "http"
-    NEXUS_URL = "192.168.49.1:8081"
-    NEXUS_REPOSITORY = "bootcamp"
-    NEXUS_CREDENTIAL_ID = "nexus"
+    NEXUS_URL = "192.168.58.1:8081"
+    NEXUS_REPOSITORY = "practicafinal"
+    NEXUS_CREDENTIAL_ID = "nexus_credentials"
   }
 
   stages {
