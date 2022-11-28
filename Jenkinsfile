@@ -274,7 +274,7 @@ spec:
                     sh 'rm -r configuracion'
                 }
             }
-            sh "git clone git@github.com:lhamaoka/manifest_launcher.git launcher"
+            sh "git clone https://github.com/lhamaoka/manifest_launcher.git launcher"
             sh "kubectl apply -f launcher/deploys/backend/manifest.yml --kubeconfig=launcher/config/config"
         }
     }
