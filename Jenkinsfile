@@ -14,6 +14,12 @@ spec:
       name: docker-socket-volume
     securityContext:
       privileged: true
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    command:
+    - cat
+    imagePullPolicy: IfNotPresent
+    tty: true
   volumes:
   - name: docker-socket-volume
     hostPath:
@@ -49,26 +55,26 @@ spec:
         }
     }
 
-    // stage('1.- Code Promotion') {
+    stage('1.- Code Promotion') {
 
-    //     when {
-    //         branch 'main'
-    //     }
-    //     steps {
-    //         script {
-    //             // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
-    //             pom = readMavenPom file: "pom.xml"
+        when {
+            branch 'main'
+        }
+        steps {
+            script {
+                // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
+                pom = readMavenPom file: "pom.xml"
                 
-    //             echo "${version}"
-    //             sh "mvn versions:set -DremoveSnapshot=true"
-    //             // def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-    //             // echo "${versionsinsnapshot}"
-    //             // sh "git add pom.xml"
-    //             // sh "git commit -m \"pom.xml update \""
-    //             // sh "git push https://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@github.com/lhamaoka/practica_final_backend.git main"
-    //         }
-    //     }
-    // }
+                echo "${version}"
+                sh "mvn versions:set -DremoveSnapshot=true"
+                // def versionsinsnapshot = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+                // echo "${versionsinsnapshot}"
+                sh "git add pom.xml"
+                sh "git commit -m \"pom.xml update \""
+                sh "git push git@github.com:lhamaoka/practica_final_backend.git main"
+            }
+        }
+    }
 
     // stage("2.- Compile"){
     //     steps{
