@@ -128,15 +128,15 @@ spec:
                 def DOCKER_HUB_USER = "lhamaoka"
                 def APP_IMAGE_NAME = "practica-final-backend"
                 def APP_IMAGE_TAG = "latest"
-                withCredentials([usernamePassword(credentialsId: "dockerhub_credentials", passwordVariable: "jenkins_dockerhubPassword", usernameVariable: "jenkins_dockerhubUser")]) {
-                    AUTH = sh(script: """echo -n "${env.jenkins_dockerhubUser}:${env.jenkins_dockerhubPassword}" | base64""", returnStdout: true).trim()
+                withCredentials([usernamePassword(credentialsId: "dockerhub_credentials", passwordVariable: "dockerhub_credentialsPassword", usernameVariable: "dockerhub_credentialsUser")]) {
+                    AUTH = sh(script: """echo -n "${env.dockerhub_credentialsUser}:${env.dockerhub_credentialsPassword}" | base64""", returnStdout: true).trim()
                     command = """echo '{"auths": {"https://index.docker.io/v1/": {"auth": "${AUTH}"}}}' >> /kaniko/.docker/config.json"""
                     sh("""
                     set +x
                     ${command}
                     set -x
                     """)
-                    sh "/kaniko/executor --dockerfile Dockerfile --context git://github.com/komljen/dockerfile-examples.git#refs/heads/master# --destination ${DOCKER_HUB_USER}/${APP_IMAGE_NAME}:${APP_IMAGE_TAG} --cleanup"
+                    sh "/kaniko/executor --context `pwd` --destination ${registryBacktend}:${APP_IMAGE_TAG} --cleanup"
                 }
             }
             // script {
