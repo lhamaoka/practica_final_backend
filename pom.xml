@@ -29,7 +29,7 @@
                 <sonar.host.url>
                     https://daita-sonarqube.loca.lt
                 </sonar.host.url>
-                <sonar.login>sqa_70404e9e6475564607a0e65202a5f9bdb7caf76a</sonar.login>
+                <sonar.login>squ_ea39c8310fd11bcfa6fbc14ee2d247f25ac1407d</sonar.login>
             </properties>
         </profile>
     </profiles>
