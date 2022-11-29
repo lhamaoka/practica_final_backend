@@ -128,7 +128,7 @@ spec:
                 def DOCKER_HUB_USER = "lhamaoka"
                 def APP_IMAGE_NAME = "practica-final-backend"
                 def APP_IMAGE_TAG = "latest"
-                withCredentials([usernamePassword(credentialsId: "dockerhub_credentials", passwordVariable: "DOCKER_HUB_PASS", usernameVariable: "DOCKER_HUB_USER")]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', passwordVariable: 'DOCKER_HUB_PASS', usernameVariable: 'DOCKER_HUB_USER')]) {
                     AUTH = sh(script: """echo -n "${DOCKER_HUB_USER}:${DOCKER_HUB_PASS}" | base64""", returnStdout: true).trim()
                     command = """echo '{"auths": {"https://index.docker.io/v1/": {"auth": "${AUTH}"}}}' >> /kaniko/.docker/config.json"""
                     sh("""
