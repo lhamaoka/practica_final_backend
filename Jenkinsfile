@@ -126,7 +126,7 @@ spec:
         steps{
             script {
                 def DOCKER_HUB_USER = "lhamaoka"
-                def APP_IMAGE_NAME = "hello_kaniko"
+                def APP_IMAGE_NAME = "practica-final-backend"
                 def APP_IMAGE_TAG = "latest"
                 withCredentials([usernamePassword(credentialsId: "dockerhub_credentials", passwordVariable: "jenkins_dockerhubPassword", usernameVariable: "jenkins_dockerhubUser")]) {
                     AUTH = sh(script: """echo -n "${env.jenkins_dockerhubUser}:${env.jenkins_dockerhubPassword}" | base64""", returnStdout: true).trim()
