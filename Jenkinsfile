@@ -125,7 +125,6 @@ spec:
     stage("8.- Build & Push"){
         steps{
             script {
-                def DOCKER_HUB_USER = "lhamaoka"
                 def APP_IMAGE_NAME = "practica-final-backend"
                 def APP_IMAGE_TAG = "latest"
                 withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', passwordVariable: 'DOCKER_HUB_PASS', usernameVariable: 'DOCKER_HUB_USER')]) {
