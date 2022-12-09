@@ -27,7 +27,7 @@
             <properties>
                 <!-- Optional URL to server. Default value is http://localhost:9000 -->
                 <sonar.host.url>
-                    http://localhost:59528/
+                    http://172.17.0.6:9000
                 </sonar.host.url>
                 <sonar.login>squ_7b1f6111be6f450b28dc0a8ebebd16e5815cdd54</sonar.login>
             </properties>
@@ -63,11 +63,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.1.2184</version>
             </plugin>
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
