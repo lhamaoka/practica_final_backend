@@ -38,7 +38,7 @@ spec:
     registryCredential='dockerhub_credentials'
     registryBacktend = 'lhamaoka/practica-final-backend'
     POM_VERSION = ''
-    version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+    // version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
     NEXUS_VERSION = "nexus3"
     NEXUS_PROTOCOL = "http"
     NEXUS_URL = "192.168.58.1:8081"
