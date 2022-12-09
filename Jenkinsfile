@@ -76,11 +76,11 @@ spec:
     //     }
     // }
 
-    // stage("2.- Compile"){
-    //     steps{
-    //         sh "mvn clean compile -DskipTests"
-    //     }
-    // }
+    stage("2.- Compile"){
+        steps{
+            sh "mvn clean compile -DskipTests"
+        }
+    }
 
     // stage("3.- Unit Tests") {
     //     steps {
