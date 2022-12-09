@@ -48,12 +48,12 @@ spec:
 
   stages {
 
-    stage("Prepare environment"){
-        steps{
-            sh "mvn -v"
-            sh "java --version"
-        }
-    }
+    // stage("Prepare environment"){
+    //     steps{
+    //         sh "mvn -v"
+    //         sh "java --version"
+    //     }
+    // }
 
     // stage('1.- Code Promotion') {
 
@@ -76,24 +76,24 @@ spec:
     //     }
     // }
 
-    stage("2.- Compile"){
-        steps{
-            sh "mvn clean compile -DskipTests"
-        }
-    }
+    // stage("2.- Compile"){
+    //     steps{
+    //         sh "mvn clean compile -DskipTests"
+    //     }
+    // }
 
-    stage("3.- Unit Tests") {
-        steps {
-            sh "mvn test"
-            junit "target/surefire-reports/*.xml"
-        }
-    }
+    // stage("3.- Unit Tests") {
+    //     steps {
+    //         sh "mvn test"
+    //         junit "target/surefire-reports/*.xml"
+    //     }
+    // }
 
-    stage("4.- JaCoCo Tests") {
-        steps {
-            jacoco()
-        }
-    }
+    // stage("4.- JaCoCo Tests") {
+    //     steps {
+    //         jacoco()
+    //     }
+    // }
 
     stage('5.- SonarQube analysis') {
         steps {
